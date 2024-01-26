@@ -6,7 +6,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    a.setWindowIcon(QIcon(":/images/icon.ico"));
+    a.setWindowIcon(QIcon(":/images/ico.ico"));
 
     QPixmap logo(":/images/simb_labl.png");
     DbLogin d(QObject::tr("Производство электродов"),logo);

@@ -21,6 +21,7 @@ SOURCES += \
     db/dbviewer.cpp \
     db/executor.cpp \
     db/tablemodel.cpp \
+    formpart.cpp \
     main.cpp \
     mainwindow.cpp \
     olap/axiswidget.cpp \
@@ -29,7 +30,8 @@ SOURCES += \
     olap/dialogolapflt.cpp \
     olap/formfilter.cpp \
     olap/olapmodel.cpp \
-    olap/tableview.cpp
+    olap/tableview.cpp \
+    rels.cpp
 
 HEADERS += \
     db/dbcombobox.h \
@@ -42,6 +44,7 @@ HEADERS += \
     db/dbviewer.h \
     db/executor.h \
     db/tablemodel.h \
+    formpart.h \
     mainwindow.h \
     olap/axiswidget.h \
     olap/cubewidget.h \
@@ -49,11 +52,13 @@ HEADERS += \
     olap/dialogolapflt.h \
     olap/formfilter.h \
     olap/olapmodel.h \
-    olap/tableview.h
+    olap/tableview.h \
+    rels.h
 
 FORMS += \
     db/dblogin.ui \
     db/dbrelationeditdialog.ui \
+    formpart.ui \
     mainwindow.ui \
     olap/axiswidget.ui \
     olap/cubewidget.ui \
@@ -69,3 +74,6 @@ RC_FILE = ico.rc
 
 RESOURCES += \
     res.qrc
+
+DISTFILES += \
+    ico.rc

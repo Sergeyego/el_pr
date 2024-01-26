@@ -6,16 +6,130 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>966</width>
+    <height>651</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Производство электродов</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <property name="movable">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>966</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Производство</string>
+    </property>
+    <addaction name="actionPart"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Операции</string>
+    </property>
+    <addaction name="actionPack"/>
+    <addaction name="actionPerePack"/>
+    <addaction name="actionSelf"/>
+    <addaction name="actionFix"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>Отчеты</string>
+    </property>
+    <addaction name="actionRep"/>
+    <addaction name="actionAvail"/>
+   </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>Аналитика</string>
+    </property>
+    <addaction name="actionAnPack"/>
+    <addaction name="actionAnPackZp"/>
+    <addaction name="actionAnPackDef"/>
+    <addaction name="actionAnTrans"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
+   <addaction name="menu_4"/>
+  </widget>
+  <action name="actionPart">
+   <property name="text">
+    <string>Партии</string>
+   </property>
+  </action>
+  <action name="actionPack">
+   <property name="text">
+    <string>Упаковка</string>
+   </property>
+  </action>
+  <action name="actionPerePack">
+   <property name="text">
+    <string>Переупаковка</string>
+   </property>
+  </action>
+  <action name="actionSelf">
+   <property name="text">
+    <string>Собственное потребление</string>
+   </property>
+  </action>
+  <action name="actionRep">
+   <property name="text">
+    <string>Отчет за период</string>
+   </property>
+  </action>
+  <action name="actionAvail">
+   <property name="text">
+    <string>Наличие в цехе</string>
+   </property>
+  </action>
+  <action name="actionFix">
+   <property name="text">
+    <string>Фиксированные остатки</string>
+   </property>
+  </action>
+  <action name="actionAnPack">
+   <property name="text">
+    <string>Анализ упаковки</string>
+   </property>
+  </action>
+  <action name="actionAnTrans">
+   <property name="text">
+    <string>Анализ передач на склад</string>
+   </property>
+  </action>
+  <action name="actionAnPackZp">
+   <property name="text">
+    <string>Анализ упаковки по зарплате</string>
+   </property>
+  </action>
+  <action name="actionAnPackDef">
+   <property name="text">
+    <string>Анализ брака при упаковке</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
