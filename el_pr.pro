@@ -21,9 +21,13 @@ SOURCES += \
     db/dbviewer.cpp \
     db/executor.cpp \
     db/tablemodel.cpp \
+    dialogloadchem.cpp \
+    dialogtmp.cpp \
     formpart.cpp \
     main.cpp \
     mainwindow.cpp \
+    modelro.cpp \
+    models.cpp \
     olap/axiswidget.cpp \
     olap/cubewidget.cpp \
     olap/cubic.cpp \
@@ -44,8 +48,12 @@ HEADERS += \
     db/dbviewer.h \
     db/executor.h \
     db/tablemodel.h \
+    dialogloadchem.h \
+    dialogtmp.h \
     formpart.h \
     mainwindow.h \
+    modelro.h \
+    models.h \
     olap/axiswidget.h \
     olap/cubewidget.h \
     olap/cubic.h \
@@ -58,6 +66,8 @@ HEADERS += \
 FORMS += \
     db/dblogin.ui \
     db/dbrelationeditdialog.ui \
+    dialogloadchem.ui \
+    dialogtmp.ui \
     formpart.ui \
     mainwindow.ui \
     olap/axiswidget.ui \

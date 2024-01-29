@@ -10,7 +10,7 @@ class Rels : public QObject
 public:
     static Rels *instance();
     DbSqlRelation *relGlass;
-    DbSqlRelation *relPar;
+    DbSqlRelation *relCons;
     DbSqlRelation *relSrc;
     DbSqlRelation *relRcp;
     DbSqlRelation *relMark;
@@ -22,6 +22,8 @@ public:
     DbSqlRelation *relPack;
     DbSqlRelation *relLong;
     DbSqlRelation *relVar;
+    DbSqlRelation *relDos;
+    DbSqlRelation *relRab;
 
 protected:
     explicit Rels(QObject *parent = 0);

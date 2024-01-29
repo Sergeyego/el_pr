@@ -11,14 +11,38 @@ Rels *Rels::instance()
 
 
 Rels::Rels(QObject *parent) : QObject(parent)
-{
-    /*relGlass = new DbRelation(QString("select id, nam from matr where id_type=3 or id_type=4 order by nam"),0,1,this);
-    relPar = new DbRelation(QString("select id, nam from glass_par order by nam"),0,1,this);
-    relChem = new DbRelation(QString("select id, sig from chem_tbl order by sig"),0,1,this);
-    relMech = new DbRelation(QString("select id, nam from mech_tbl order by nam"),0,1,this);
-    relPress = new DbRelation(QString("select id, nam from pres order by nam"),0,1,this);
-    relChemDev = new DbRelation(QString("select id, short from chem_dev order by short"),0,1,this);
-    */
+{  
+    relMech = new DbSqlRelation("mech_tbl","id","nam",this);
+    relMech->setSort("nam");
+
+    relChem = new DbSqlRelation("chem_tbl","id","sig",this);
+    relChem->setSort("sig");
+
+    relChemDev = new DbSqlRelation("chem_dev","id","short",this);
+    relChemDev->setSort("short");
+
+    relRab = new DbSqlRelation("rab_rab","id","snam",this);
+    relRab->setSort("snam");
+    relRab->setFilter("rab_rab.id in (select r.id "
+                      "from rab_rab r inner join rab_qual q on q.id_rab=r.id "
+                      "inner join rab_prof p on p.id=q.id_prof "
+                      "inner join rab_razr z on z.id=q.id_razr "
+                      "where id_rab=r.id and id_prof=1 and id_razr in (2,3) "
+                      "order by r.snam)");
+
+    relPress = new DbSqlRelation("pres","id","nam",this);
+    relPress->setSort("nam");
+
+    relDos = new DbSqlRelation("dosage","id","str",this);
+    relDos->setSort("dosage.dat desc, dosage.parti");
+    relDos->model()->setLimit(4000);
+
+    relGlass = new DbSqlRelation("matr","id","nam",this);
+    relGlass->setFilter("matr.id_type=3 or matr.id_type=4");
+    relGlass->setSort("nam");
+
+    relCons = new DbSqlRelation("glass_cons","id","num",this);
+    relCons->setSort("num");
 
     relSrc = new DbSqlRelation("istoch","id","nam",this);
     relSrc->setSort("nam");
