@@ -23,7 +23,9 @@ SOURCES += \
     db/tablemodel.cpp \
     dialogloadchem.cpp \
     dialogtmp.cpp \
+    formpack.cpp \
     formpart.cpp \
+    invoicemanager.cpp \
     main.cpp \
     mainwindow.cpp \
     modelro.cpp \
@@ -50,7 +52,9 @@ HEADERS += \
     db/tablemodel.h \
     dialogloadchem.h \
     dialogtmp.h \
+    formpack.h \
     formpart.h \
+    invoicemanager.h \
     mainwindow.h \
     modelro.h \
     models.h \
@@ -68,6 +72,7 @@ FORMS += \
     db/dbrelationeditdialog.ui \
     dialogloadchem.ui \
     dialogtmp.ui \
+    formpack.ui \
     formpart.ui \
     mainwindow.ui \
     olap/axiswidget.ui \

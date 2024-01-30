@@ -12,6 +12,8 @@ Rels *Rels::instance()
 
 Rels::Rels(QObject *parent) : QObject(parent)
 {  
+    invoiceManager = new InvoiceManager(this);
+
     relMech = new DbSqlRelation("mech_tbl","id","nam",this);
     relMech->setSort("nam");
 
@@ -66,5 +68,14 @@ Rels::Rels(QObject *parent) : QObject(parent)
 
     relVar = new DbSqlRelation("elrtr_vars","id","nam",this);
     relVar->setSort("id");
+
+    relPackType = new DbSqlRelation("parti_nakl_tip","id","nam",this);
+    relPackType->setSort("id");
+    relPackType->setFilter("en=true");
+
+    relElPart = new DbSqlRelation("parti","id","str",this);
+    relElPart->setSort("parti.dat_part desc, parti.n_s desc");
+    relElPart->setFilter("parti.id<>0");
+    relElPart->model()->setLimit(4000);
 }
 

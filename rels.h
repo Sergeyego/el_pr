@@ -3,12 +3,14 @@
 
 #include <QObject>
 #include "db/dbtablemodel.h"
+#include "invoicemanager.h"
 
 class Rels : public QObject
 {
     Q_OBJECT
 public:
     static Rels *instance();
+    InvoiceManager *invoiceManager;
     DbSqlRelation *relGlass;
     DbSqlRelation *relCons;
     DbSqlRelation *relSrc;
@@ -24,6 +26,8 @@ public:
     DbSqlRelation *relVar;
     DbSqlRelation *relDos;
     DbSqlRelation *relRab;
+    DbSqlRelation *relPackType;
+    DbSqlRelation *relElPart;
 
 protected:
     explicit Rels(QObject *parent = 0);
