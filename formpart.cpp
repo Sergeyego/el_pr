@@ -112,6 +112,24 @@ FormPart::FormPart(QWidget *parent) :
     ui->tableViewGlassPar->setColumnWidth(3,70);
     ui->tableViewGlassPar->setColumnWidth(4,80);
 
+    modelPackEl = new ModelPackEl(this);
+    ui->tableViewPack->setModel(modelPackEl);
+
+    modelPerePackEl = new ModelPerePackEl(this);
+    ui->tableViewPerePack->setModel(modelPerePackEl);
+
+    modelStockEl = new ModelStockEl(this);
+    ui->tableViewTrans->setModel(modelStockEl);
+
+    modelSelfEl = new ModelSelfEl(this);
+    ui->tableViewSelf->setModel(modelSelfEl);
+
+    modelShipEl = new ModelShipEl(this);
+    ui->tableViewShip->setModel(modelShipEl);
+
+    modelBreakEl = new ModelBreakEl(this);
+    ui->tableViewDef->setModel(modelBreakEl);
+
     modelPart = new ModelPart(this);
     ui->tableViewPart->setModel(modelPart);
     ui->tableViewPart->setColumnHidden(0,true);
@@ -213,6 +231,31 @@ void FormPart::saveSettings()
     settings.setValue("part_tab_index",ui->tabWidget->currentIndex());
 }
 
+void FormPart::refreshStat(QGroupBox *g, TableView *v)
+{
+    ModelStat *model = qobject_cast<ModelStat *>(v->model());
+    if (model){
+        int id_part=mapper->modelData(mapper->currentIndex(),0).isNull() ? -1 : mapper->modelData(mapper->currentIndex(),0).toInt();
+        model->refresh(id_part);
+        g->setTitle(model->getTitle());
+        if (model->rowCount()){
+            g->show();
+            v->resizeToContents();
+            int tw=5+g->fontMetrics().horizontalAdvance(g->title());
+            int w=30+v->verticalHeader()->frameSize().width();
+            for (int i=0; i<v->model()->columnCount(); i++){
+                if (!v->isColumnHidden(i)){
+                    w+=v->columnWidth(i);
+                }
+            }
+            w=(tw>w)? tw : w;
+            g->setMinimumSize(w,0);
+        } else {
+            g->hide();
+        }
+    }
+}
+
 void FormPart::updPart()
 {
     int id_el=-1;
@@ -233,7 +276,7 @@ void FormPart::updPart()
 
 void FormPart::refreshCont(int ind)
 {
-    int id_part=mapper->modelData(ind,0).toInt();
+    int id_part=mapper->modelData(ind,0).isNull() ? -1 : mapper->modelData(ind,0).toInt();
     QDate dat_part=mapper->modelData(ind,2).toDate();
 
     modelGlass->setFilter("acc_glyba.id_part = "+QString::number(id_part));
@@ -257,6 +300,13 @@ void FormPart::refreshCont(int ind)
 
     modelChem->refresh(id_part);
     modelMech->refresh(id_part);
+
+    refreshStat(ui->groupBoxPack,ui->tableViewPack);
+    refreshStat(ui->groupBoxPerepack,ui->tableViewPerePack);
+    refreshStat(ui->groupBoxTrans,ui->tableViewTrans);
+    refreshStat(ui->groupBoxSelf,ui->tableViewSelf);
+    refreshStat(ui->groupBoxShip,ui->tableViewShip);
+    refreshStat(ui->groupBoxDef,ui->tableViewDef);
 }
 
 void FormPart::setCurrentChemDev()
@@ -470,4 +520,236 @@ void ModelPart::refreshState()
     } else {
         QMessageBox::critical(NULL,tr("Error"),query.lastError().text(),QMessageBox::Ok);
     }
+}
+
+ModelPackEl::ModelPackEl(QObject *parent) : ModelStat(parent)
+{
+
+}
+
+void ModelPackEl::refresh(int id_part)
+{
+    double sum=0;
+    QString title=tr("Упаковка");
+    QSqlQuery query;
+    query.prepare("select pn.dat, pn.num, pp.kvo  from parti_pack pp "
+                  "inner join parti_nakl pn on pn.id = pp.id_nakl "
+                  "where pp.id_part = :id_part order by pn.dat, pn.num");
+    query.bindValue(":id_part",id_part);
+    if (execQuery(query)){
+        setHeaderData(0,Qt::Horizontal,tr("Дата"));
+        setHeaderData(1,Qt::Horizontal,tr("№ нак."));
+        setHeaderData(2,Qt::Horizontal,tr("К-во, кг"));
+        for (int i=0; i<rowCount(); i++){
+            sum+=data(index(i,2),Qt::EditRole).toDouble();
+        }
+    }
+    QString s;
+    s = (sum!=0)? (title + tr(" итого: ")+QLocale().toString(sum,'f',1)+tr(" кг")) : title;
+    setTitle(s);
+}
+
+ModelPerePackEl::ModelPerePackEl(QObject *parent) : ModelStat(parent)
+{
+
+}
+
+void ModelPerePackEl::refresh(int id_part)
+{
+    double sum=0;
+    double sumBreak=0;
+    QString title=tr("Переупаковка");
+    QSqlQuery query;
+    query.prepare(QString::fromUtf8("select * from ( "
+                  "(select pn.dat as dat, pn.num as num, "
+                  "(case when pp.id_new_part<>0 then'Переуп. в парт. '||p.n_s ||'-'||date_part('year',p.dat_part) else 'Брак при переуп.' end) as part, "
+                  "pp.kvo*(-1) as kvo, pp.kvo_break as break "
+                  "from parti_perepack pp "
+                  "inner join parti_nakl pn on pn.id = pp.id_nakl "
+                  "inner join parti p on p.id = pp.id_new_part "
+                  "where pp.id_part = :id_part and  pn.tip = 7 ) "
+                  "union "
+                  "(select pn.dat as dat, pn.num as num, 'Переуп. из парт. '||p.n_s ||'-'||date_part('year',p.dat_part) as part, "
+                  "pp.kvo as kvo, NULL as break "
+                  "from parti_perepack pp "
+                  "inner join parti_nakl pn on pn.id = pp.id_nakl "
+                  "inner join parti p on p.id = pp.id_part "
+                  "where pp.id_new_part = :id_new_part and  pn.tip = 7 ) "
+                  ") as z order by z.dat, z.num"));
+    query.bindValue(":id_part",id_part);
+    query.bindValue(":id_new_part",id_part);
+    if (execQuery(query)){
+        setHeaderData(0,Qt::Horizontal,tr("Дата"));
+        setHeaderData(1,Qt::Horizontal,tr("№ нак."));
+        setHeaderData(2,Qt::Horizontal,tr("Операция"));
+        setHeaderData(3,Qt::Horizontal,tr("К-во, кг"));
+        setHeaderData(4,Qt::Horizontal,tr("Брак, кг"));
+        for (int i=0; i<rowCount(); i++){
+            sum+=data(index(i,3),Qt::EditRole).toDouble();
+            sumBreak+=data(index(i,4),Qt::EditRole).toDouble();
+        }
+    }
+
+    QString s;
+    s = (sum!=0)? (title + tr(" итого: ")+QLocale().toString(sum,'f',1)+tr(" кг")) : title;
+    if (sumBreak!=0){
+        s+=tr(" брак ")+QLocale().toString(sumBreak,'f',1)+tr(" кг");
+    }
+    setTitle(s);
+
+}
+
+ModelBreakEl::ModelBreakEl(QObject *parent) : ModelStat(parent)
+{
+
+}
+
+void ModelBreakEl::refresh(int id_part)
+{
+    double sum=0;
+    QString title=tr("Брак");
+    QSqlQuery query;
+    query.prepare("select pn.dat, pn.num, pb.kvo "
+                  "from parti_break pb "
+                  "inner join parti_nakl pn on pn.id = pb.id_nakl "
+                  "where pn.tip=2 and pb.id_part = :id_part "
+                  "order by pn.dat, pn.num");
+    query.bindValue(":id_part",id_part);
+    if (execQuery(query)){
+        setHeaderData(0,Qt::Horizontal,tr("Дата"));
+        setHeaderData(1,Qt::Horizontal,tr("№ нак."));
+        setHeaderData(2,Qt::Horizontal,tr("К-во, кг"));
+        for (int i=0; i<rowCount(); i++){
+            sum+=data(index(i,2),Qt::EditRole).toDouble();
+        }
+    }
+    QString s;
+    s = (sum!=0)? (title + tr(" итого: ")+QLocale().toString(sum,'f',1)+tr(" кг")) : title;
+    setTitle(s);
+}
+
+ModelSelfEl::ModelSelfEl(QObject *parent) : ModelStat(parent)
+{
+
+}
+
+void ModelSelfEl::refresh(int id_part)
+{
+    double sum=0;
+    QString title=tr("Собств. потреб.");
+    QSqlQuery query;
+    query.prepare("select ps.dat, ps.num, ps.kto, psi.kvo*sc.koef "
+                  "from prod_self_items psi "
+                  "inner join prod_self ps on ps.id = psi.id_self "
+                  "inner join self_cons sc on sc.id = psi.id_cons "
+                  "where psi.id_part = :id_part order by ps.dat, ps.num");
+    query.bindValue(":id_part",id_part);
+    if (execQuery(query)){
+        setHeaderData(0,Qt::Horizontal,tr("Дата"));
+        setHeaderData(1,Qt::Horizontal,tr("№ нак."));
+        setHeaderData(2,Qt::Horizontal,tr("Куда"));
+        setHeaderData(3,Qt::Horizontal,tr("К-во, кг"));
+        for (int i=0; i<rowCount(); i++){
+            sum+=data(index(i,3),Qt::EditRole).toDouble();
+        }
+    }
+    QString s;
+    s = (sum!=0)? (title + tr(" итого: ")+QLocale().toString(sum,'f',1)+tr(" кг")) : title;
+    setTitle(s);
+}
+
+ModelStockEl::ModelStockEl(QObject *parent) : ModelStat(parent)
+{
+
+}
+
+void ModelStockEl::refresh(int id_part)
+{
+    QString title=tr("Склад");
+    QMap <QString,double> map;
+    QSqlQuery query;
+    query.prepare("select pn.dat, pn.num, i.nam, p.kvo*i.koef "
+                  "from prod p "
+                  "inner join prod_nakl pn on pn.id=p.id_nakl "
+                  "inner join istoch i on i.id=pn.id_ist "
+                  "where p.id_part = :id_part "
+                  "order by pn.dat, pn.num");
+    query.bindValue(":id_part",id_part);
+    if (execQuery(query)){
+        setHeaderData(0,Qt::Horizontal,tr("Дата"));
+        setHeaderData(1,Qt::Horizontal,tr("№ нак."));
+        setHeaderData(2,Qt::Horizontal,tr("Источник"));
+        setHeaderData(3,Qt::Horizontal,tr("К-во, кг"));
+        for (int i=0; i<rowCount(); i++){
+            QString key=data(index(i,2),Qt::EditRole).toString();
+            double val=data(index(i,3),Qt::EditRole).toDouble();
+            if (map.contains(key)){
+                double oldval=map.value(key);
+                map[key]=oldval+val;
+            } else {
+                map[key]=val;
+            }
+        }
+    }
+    QString s;
+    QStringList list = map.keys();
+    for (QString l : list) {
+        if (!s.isEmpty()){
+            s+=tr("; ");
+        }
+        s+=l+tr(": ")+QLocale().toString(map.value(l),'f',1)+tr(" кг");
+    }
+    setTitle(title+tr(" ")+s);
+}
+
+ModelShipEl::ModelShipEl(QObject *parent) : ModelStat(parent)
+{
+
+}
+
+void ModelShipEl::refresh(int id_part)
+{
+    double sum=0;
+    QString title=tr("Отгрузки");
+    QSqlQuery query;
+    query.prepare("select s.dat_vid, s.nom_s, p.short, o.massa "
+                  "from otpusk o "
+                  "inner join sertifikat s on o.id_sert=s.id "
+                  "inner join poluch p on s.id_pol=p.id "
+                  "where o.id_part = :id_part and s.id_type = 1 "
+                  "order by s.dat_vid, s.nom_s");
+    query.bindValue(":id_part",id_part);
+    if (execQuery(query)){
+        setHeaderData(0,Qt::Horizontal,tr("Дата"));
+        setHeaderData(1,Qt::Horizontal,tr("№ нак."));
+        setHeaderData(2,Qt::Horizontal,tr("Получатель"));
+        setHeaderData(3,Qt::Horizontal,tr("К-во, кг"));
+        for (int i=0; i<rowCount(); i++){
+            sum+=data(index(i,3),Qt::EditRole).toDouble();
+        }
+    }
+    QString s;
+    s = (sum!=0)? (title + tr(" итого: ")+QLocale().toString(sum,'f',1)+tr(" кг")) : title;
+    setTitle(s);
+}
+
+ModelStat::ModelStat(QObject *parent) : ModelRo(parent)
+{
+    setDecimal(1);
+}
+
+void ModelStat::refresh(int /*id_part*/)
+{
+
+}
+
+QString ModelStat::getTitle()
+{
+    return tit;
+}
+
+void ModelStat::setTitle(QString t)
+{
+    tit=t;
+    emit sigSum(tit);
 }

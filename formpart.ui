@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1181</width>
+    <width>1179</width>
     <height>838</height>
    </rect>
   </property>
@@ -336,6 +336,11 @@
              <height>16777215</height>
             </size>
            </property>
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
            <attribute name="verticalHeaderVisible">
             <bool>false</bool>
            </attribute>
@@ -348,6 +353,11 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
            </property>
            <attribute name="verticalHeaderVisible">
             <bool>false</bool>
@@ -611,7 +621,7 @@
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab">
           <attribute name="title">
@@ -620,6 +630,11 @@
           <layout class="QHBoxLayout" name="horizontalLayout_9">
            <item>
             <widget class="QScrollArea" name="scrollArea">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
@@ -628,13 +643,13 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>815</width>
+                <width>813</width>
                 <height>248</height>
                </rect>
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_11">
                <item>
-                <widget class="QGroupBox" name="groupBox">
+                <widget class="QGroupBox" name="groupBoxPack">
                  <property name="title">
                   <string>Упаковка</string>
                  </property>
@@ -655,13 +670,17 @@
                    <number>2</number>
                   </property>
                   <item>
-                   <widget class="QTableView" name="tableViewPack"/>
+                   <widget class="TableView" name="tableViewPack">
+                    <attribute name="verticalHeaderVisible">
+                     <bool>false</bool>
+                    </attribute>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
                </item>
                <item>
-                <widget class="QGroupBox" name="groupBox_2">
+                <widget class="QGroupBox" name="groupBoxPerepack">
                  <property name="title">
                   <string>Переупаковка</string>
                  </property>
@@ -682,13 +701,17 @@
                    <number>2</number>
                   </property>
                   <item>
-                   <widget class="QTableView" name="tableViewPerePack"/>
+                   <widget class="TableView" name="tableViewPerePack">
+                    <attribute name="verticalHeaderVisible">
+                     <bool>false</bool>
+                    </attribute>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
                </item>
                <item>
-                <widget class="QGroupBox" name="groupBox_3">
+                <widget class="QGroupBox" name="groupBoxTrans">
                  <property name="title">
                   <string>Передача на склад</string>
                  </property>
@@ -709,13 +732,17 @@
                    <number>2</number>
                   </property>
                   <item>
-                   <widget class="QTableView" name="tableViewTrans"/>
+                   <widget class="TableView" name="tableViewTrans">
+                    <attribute name="verticalHeaderVisible">
+                     <bool>false</bool>
+                    </attribute>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
                </item>
                <item>
-                <widget class="QGroupBox" name="groupBox_4">
+                <widget class="QGroupBox" name="groupBoxSelf">
                  <property name="title">
                   <string>Собст. потреб.</string>
                  </property>
@@ -736,13 +763,17 @@
                    <number>2</number>
                   </property>
                   <item>
-                   <widget class="QTableView" name="tableViewSelf"/>
+                   <widget class="TableView" name="tableViewSelf">
+                    <attribute name="verticalHeaderVisible">
+                     <bool>false</bool>
+                    </attribute>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
                </item>
                <item>
-                <widget class="QGroupBox" name="groupBox_5">
+                <widget class="QGroupBox" name="groupBoxShip">
                  <property name="title">
                   <string>Отгрузка</string>
                  </property>
@@ -763,13 +794,17 @@
                    <number>2</number>
                   </property>
                   <item>
-                   <widget class="QTableView" name="tableViewShip"/>
+                   <widget class="TableView" name="tableViewShip">
+                    <attribute name="verticalHeaderVisible">
+                     <bool>false</bool>
+                    </attribute>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
                </item>
                <item>
-                <widget class="QGroupBox" name="groupBox_6">
+                <widget class="QGroupBox" name="groupBoxDef">
                  <property name="title">
                   <string>Брак</string>
                  </property>
@@ -790,10 +825,27 @@
                    <number>2</number>
                   </property>
                   <item>
-                   <widget class="QTableView" name="tableViewDef"/>
+                   <widget class="TableView" name="tableViewDef">
+                    <attribute name="verticalHeaderVisible">
+                     <bool>false</bool>
+                    </attribute>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_4">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
               </layout>
              </widget>
@@ -1003,6 +1055,11 @@
    <class>DbComboBox</class>
    <extends>QComboBox</extends>
    <header>db/dbcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TableView</class>
+   <extends>QTableView</extends>
+   <header>olap/tableview.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
