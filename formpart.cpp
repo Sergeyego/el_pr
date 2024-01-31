@@ -243,7 +243,11 @@ void FormPart::refreshStat(QGroupBox *g, TableView *v)
         if (model->rowCount()){
             g->show();
             v->resizeToContents();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
             int tw=5+g->fontMetrics().horizontalAdvance(g->title());
+#else
+            int tw=5+g->fontMetrics().width(g->title());
+#endif
             int w=30+v->verticalHeader()->frameSize().width();
             for (int i=0; i<v->model()->columnCount(); i++){
                 if (!v->isColumnHidden(i)){
