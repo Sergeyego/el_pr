@@ -25,9 +25,12 @@ SOURCES += \
     dialogtmp.cpp \
     formpack.cpp \
     formpart.cpp \
+    formperepack.cpp \
+    formself.cpp \
     invoicemanager.cpp \
     main.cpp \
     mainwindow.cpp \
+    modelnakl.cpp \
     modelro.cpp \
     models.cpp \
     olap/axiswidget.cpp \
@@ -54,8 +57,11 @@ HEADERS += \
     dialogtmp.h \
     formpack.h \
     formpart.h \
+    formperepack.h \
+    formself.h \
     invoicemanager.h \
     mainwindow.h \
+    modelnakl.h \
     modelro.h \
     models.h \
     olap/axiswidget.h \
@@ -74,6 +80,8 @@ FORMS += \
     dialogtmp.ui \
     formpack.ui \
     formpart.ui \
+    formperepack.ui \
+    formself.ui \
     mainwindow.ui \
     olap/axiswidget.ui \
     olap/cubewidget.ui \

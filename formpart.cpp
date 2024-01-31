@@ -186,6 +186,8 @@ FormPart::FormPart(QWidget *parent) :
     mapper->addEmptyLock(ui->tableViewMech);
     mapper->addEmptyLock(ui->pushButtonChem);
     mapper->addEmptyLock(ui->pushButtonSamp);
+    mapper->addEmptyLock(ui->checkBoxOnly);
+    mapper->addEmptyLock(ui->comboBoxChemDev);
 
     ui->comboBoxOnly->setModel(Rels::instance()->relMark->model());
     ui->comboBoxOnly->setModelColumn(1);

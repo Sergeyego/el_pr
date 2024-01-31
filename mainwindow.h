@@ -7,6 +7,8 @@
 #include "olap/cubewidget.h"
 #include "formpart.h"
 #include "formpack.h"
+#include "formperepack.h"
+#include "formself.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,6 +31,8 @@ private slots:
     void closeTab(int index);
     void newFormPart();
     void newFormPack();
+    void newFormPerePack();
+    void newFormSelf();
     void newAnPack();
     void newAnPackZp();
     void newAnPackDef();

@@ -28,6 +28,8 @@ public:
     DbSqlRelation *relRab;
     DbSqlRelation *relPackType;
     DbSqlRelation *relElPart;
+    DbSqlRelation *relElPartNew;
+    DbSqlRelation *relSelfType;
 
 protected:
     explicit Rels(QObject *parent = 0);

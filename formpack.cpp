@@ -38,6 +38,9 @@ FormPack::FormPack(QWidget *parent) :
     mapper->addEmptyLock(ui->tableViewNaklData);
     mapper->addEmptyLock(ui->pushButtonNakl);
     mapper->addEmptyLock(ui->pushButtonNaklPer);
+    mapper->addLock(ui->pushButtonUpd);
+    mapper->addLock(ui->dateEditBeg);
+    mapper->addLock(ui->dateEditEnd);
 
     connect(ui->pushButtonUpd,SIGNAL(clicked(bool)),this,SLOT(upd()));
     connect(ui->comboBoxType,SIGNAL(currentIndexChanged(int)),this,SLOT(upd()));
@@ -128,35 +131,6 @@ void FormPack::naklPer()
     QString filename=ui->comboBoxType->currentText().toUpper()+"_"+ui->dateEditBeg->date().toString("yyyy-MM-dd")+"_"+ui->dateEditEnd->date().toString("yyyy-MM-dd");
     int year=mapper->modelData(mapper->currentIndex(),2).toDate().year();
     Rels::instance()->invoiceManager->getInvoice("invoices/elrtr/workshopper/"+ui->dateEditBeg->date().toString("yyyy-MM-dd")+"/"+ui->dateEditEnd->date().toString("yyyy-MM-dd"),vid,type,filename,year);
-}
-
-ModelNakl::ModelNakl(QObject *parent) : DbTableModel("parti_nakl",parent)
-{
-    addColumn("id",tr("id"));
-    addColumn("num",tr("Номер"));
-    addColumn("dat",tr("Дата"));
-    addColumn("tip",tr("Тип"));
-    setSort(name()+".dat, "+name()+".num");
-}
-
-void ModelNakl::refresh(int id_type, QDate begDate, QDate endDate)
-{
-    QString filter=name()+".dat between '"+begDate.toString("yyyy-MM-dd")+"' and '"+endDate.toString("yyyy-MM-dd")+"' and "+name()+".tip = "+QString::number(id_type);
-    setFilter(filter);
-    setDefaultValue(3,id_type);
-    setDefaultValue(1,"1");
-    select();
-}
-
-bool ModelNakl::insertRow(int row, const QModelIndex &parent)
-{
-    select();
-    if (rowCount()>0 && !isAdd()) {
-        int old_num=this->data(this->index(rowCount()-1,1),Qt::EditRole).toInt();
-        setDefaultValue(1,old_num+1);
-    }
-    setDefaultValue(2,QDate::currentDate());
-    return DbTableModel::insertRow(row,parent);
 }
 
 ModelNaklData::ModelNaklData(QString table, QObject *parent) : DbTableModel(table,parent)
