@@ -23,9 +23,11 @@ SOURCES += \
     db/tablemodel.cpp \
     dialogloadchem.cpp \
     dialogtmp.cpp \
+    formfix.cpp \
     formpack.cpp \
     formpart.cpp \
     formperepack.cpp \
+    formreport.cpp \
     formself.cpp \
     invoicemanager.cpp \
     main.cpp \
@@ -40,6 +42,8 @@ SOURCES += \
     olap/formfilter.cpp \
     olap/olapmodel.cpp \
     olap/tableview.cpp \
+    progressexecutor.cpp \
+    progressreportdialog.cpp \
     rels.cpp
 
 HEADERS += \
@@ -55,9 +59,11 @@ HEADERS += \
     db/tablemodel.h \
     dialogloadchem.h \
     dialogtmp.h \
+    formfix.h \
     formpack.h \
     formpart.h \
     formperepack.h \
+    formreport.h \
     formself.h \
     invoicemanager.h \
     mainwindow.h \
@@ -71,6 +77,8 @@ HEADERS += \
     olap/formfilter.h \
     olap/olapmodel.h \
     olap/tableview.h \
+    progressexecutor.h \
+    progressreportdialog.h \
     rels.h
 
 FORMS += \
@@ -78,15 +86,18 @@ FORMS += \
     db/dbrelationeditdialog.ui \
     dialogloadchem.ui \
     dialogtmp.ui \
+    formfix.ui \
     formpack.ui \
     formpart.ui \
     formperepack.ui \
+    formreport.ui \
     formself.ui \
     mainwindow.ui \
     olap/axiswidget.ui \
     olap/cubewidget.ui \
     olap/dialogolapflt.ui \
-    olap/formfilter.ui
+    olap/formfilter.ui \
+    progressreportdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

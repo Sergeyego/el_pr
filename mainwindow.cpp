@@ -12,6 +12,9 @@ MainWindow::MainWindow(QWidget *parent)
     actAction(ui->actionPack,&MainWindow::newFormPack);
     actAction(ui->actionPerePack,&MainWindow::newFormPerePack);
     actAction(ui->actionSelf,&MainWindow::newFormSelf);
+    actAction(ui->actionFix,&MainWindow::newFormFix);
+
+    actAction(ui->actionRep,&MainWindow::newFormReport);
 
     actAction(ui->actionAnPack,&MainWindow::newAnPack);
     actAction(ui->actionAnPackZp,&MainWindow::newAnPackZp);
@@ -98,6 +101,20 @@ void MainWindow::newFormSelf()
 {
     if (!exist(sender())){
         addSubWindow(new FormSelf(),sender());
+    }
+}
+
+void MainWindow::newFormFix()
+{
+    if (!exist(sender())){
+        addSubWindow(new FormFix(),sender());
+    }
+}
+
+void MainWindow::newFormReport()
+{
+    if (!exist(sender())){
+        addSubWindow(new FormReport(),sender());
     }
 }
 

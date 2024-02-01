@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>966</width>
-    <height>651</height>
+    <width>964</width>
+    <height>649</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,7 +35,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>966</width>
+     <width>964</width>
      <height>25</height>
     </rect>
    </property>
@@ -59,7 +59,6 @@
      <string>Отчеты</string>
     </property>
     <addaction name="actionRep"/>
-    <addaction name="actionAvail"/>
    </widget>
    <widget class="QMenu" name="menu_4">
     <property name="title">
