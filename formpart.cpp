@@ -644,7 +644,7 @@ void ModelSelfEl::refresh(int id_part)
     double sum=0;
     QString title=tr("Собств. потреб.");
     QSqlQuery query;
-    query.prepare("select ps.dat, ps.num, ps.kto, psi.kvo*sc.koef "
+    query.prepare("select ps.dat, ps.num, ps.kto, psi.kvo*sc.koef*(-1) "
                   "from prod_self_items psi "
                   "inner join prod_self ps on ps.id = psi.id_self "
                   "inner join self_cons sc on sc.id = psi.id_cons "

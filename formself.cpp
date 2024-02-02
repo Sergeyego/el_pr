@@ -144,6 +144,7 @@ void ModelSelfNakl::refresh(int id_type, QDate begDate, QDate endDate)
     setFilter(filter);
     setDefaultValue(3,id_type);
     setDefaultValue(1,"1");
+    setDefaultValue(4,Rels::instance()->relSelfType->getDisplayValue(id_type).toUpper());
     select();
 }
 
