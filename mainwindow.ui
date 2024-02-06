@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>964</width>
-    <height>649</height>
+    <width>962</width>
+    <height>647</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,7 +35,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>964</width>
+     <width>962</width>
      <height>25</height>
     </rect>
    </property>
@@ -64,10 +64,13 @@
     <property name="title">
      <string>Аналитика</string>
     </property>
+    <addaction name="actionAnPress"/>
     <addaction name="actionAnPack"/>
-    <addaction name="actionAnPackZp"/>
     <addaction name="actionAnPackDef"/>
     <addaction name="actionAnTrans"/>
+    <addaction name="separator"/>
+    <addaction name="actionAnPressZp"/>
+    <addaction name="actionAnPackZp"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
@@ -127,6 +130,16 @@
   <action name="actionAnPackDef">
    <property name="text">
     <string>Анализ брака при упаковке</string>
+   </property>
+  </action>
+  <action name="actionAnPress">
+   <property name="text">
+    <string>Анализ опрессовки</string>
+   </property>
+  </action>
+  <action name="actionAnPressZp">
+   <property name="text">
+    <string>Анализ опрессовки по зарплате</string>
    </property>
   </action>
  </widget>

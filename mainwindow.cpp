@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     actAction(ui->actionAnPackZp,&MainWindow::newAnPackZp);
     actAction(ui->actionAnPackDef,&MainWindow::newAnPackDef);
     actAction(ui->actionAnTrans,&MainWindow::newAnTrans);
+    actAction(ui->actionAnPress,&MainWindow::newAnPress);
+    actAction(ui->actionAnPressZp,&MainWindow::newAnPressZp);
 
     loadSettings();
     connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(closeTab(int)));
@@ -143,6 +145,20 @@ void MainWindow::newAnTrans()
 {
     if (!exist(sender())){
         addSubWindow(new CubeWidget(19),sender());
+    }
+}
+
+void MainWindow::newAnPress()
+{
+    if (!exist(sender())){
+        addSubWindow(new CubeWidget(16),sender());
+    }
+}
+
+void MainWindow::newAnPressZp()
+{
+    if (!exist(sender())){
+        addSubWindow(new CubeWidget(3),sender());
     }
 }
 

@@ -41,6 +41,8 @@ private slots:
     void newAnPackZp();
     void newAnPackDef();
     void newAnTrans();
+    void newAnPress();
+    void newAnPressZp();
 
 private:
     Ui::MainWindow *ui;
