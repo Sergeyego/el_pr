@@ -576,7 +576,7 @@ void ModelPerePackEl::refresh(int id_part)
                   "where pp.id_part = :id_part and  pn.tip = 7 ) "
                   "union "
                   "(select pn.dat as dat, pn.num as num, 'Переуп. из парт. '||p.n_s ||'-'||date_part('year',p.dat_part) as part, "
-                  "pp.kvo as kvo, NULL as break "
+                  "pp.kvo as kvo, pp.kvo_break as break "
                   "from parti_perepack pp "
                   "inner join parti_nakl pn on pn.id = pp.id_nakl "
                   "inner join parti p on p.id = pp.id_part "
