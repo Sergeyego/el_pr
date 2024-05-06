@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>962</width>
-    <height>647</height>
+    <width>960</width>
+    <height>645</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,17 +35,17 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>962</width>
+     <width>960</width>
      <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="menuPart">
     <property name="title">
      <string>Производство</string>
     </property>
     <addaction name="actionPart"/>
    </widget>
-   <widget class="QMenu" name="menu_2">
+   <widget class="QMenu" name="menuOp">
     <property name="title">
      <string>Операции</string>
     </property>
@@ -54,13 +54,13 @@
     <addaction name="actionSelf"/>
     <addaction name="actionFix"/>
    </widget>
-   <widget class="QMenu" name="menu_3">
+   <widget class="QMenu" name="menuRep">
     <property name="title">
      <string>Отчеты</string>
     </property>
     <addaction name="actionRep"/>
    </widget>
-   <widget class="QMenu" name="menu_4">
+   <widget class="QMenu" name="menuAn">
     <property name="title">
      <string>Аналитика</string>
     </property>
@@ -72,10 +72,10 @@
     <addaction name="actionAnPressZp"/>
     <addaction name="actionAnPackZp"/>
    </widget>
-   <addaction name="menu"/>
-   <addaction name="menu_2"/>
-   <addaction name="menu_3"/>
-   <addaction name="menu_4"/>
+   <addaction name="menuPart"/>
+   <addaction name="menuOp"/>
+   <addaction name="menuRep"/>
+   <addaction name="menuAn"/>
   </widget>
   <action name="actionPart">
    <property name="text">

@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(bool part, QWidget *parent = nullptr);
     ~MainWindow();
     bool exist(QObject *a);
     void actAction(QAction *a, void (MainWindow::*sl)());

@@ -1,11 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(bool part, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    if (part){
+        ui->menuOp->setEnabled(false);
+        ui->menuRep->setEnabled(false);
+        ui->menuAn->setEnabled(false);
+    }
 
     actAction(ui->actionPart,&MainWindow::newFormPart);
 
@@ -177,6 +183,8 @@ void MainWindow::loadSettings()
                 actions.value(a)->trigger();
             }
         }
+    } else {
+        ui->actionPart->trigger();
     }
     setActiveSubWindow(current);
 }
