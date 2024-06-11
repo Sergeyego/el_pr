@@ -6,6 +6,7 @@
 #include "db/dbtablemodel.h"
 #include "db/dbmapper.h"
 #include "modelnakl.h"
+#include "dialogpackload.h"
 
 namespace Ui {
 class FormPack;
@@ -44,6 +45,7 @@ private slots:
     void calcSum();
     void nakl();
     void naklPer();
+    void loadPack();
 };
 
 #endif // FORMPACK_H

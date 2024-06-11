@@ -38,6 +38,7 @@ FormPack::FormPack(QWidget *parent) :
     mapper->addEmptyLock(ui->tableViewNaklData);
     mapper->addEmptyLock(ui->pushButtonNakl);
     mapper->addEmptyLock(ui->pushButtonNaklPer);
+    mapper->addEmptyLock(ui->pushButtonLoad);
     mapper->addLock(ui->pushButtonUpd);
     mapper->addLock(ui->dateEditBeg);
     mapper->addLock(ui->dateEditEnd);
@@ -49,6 +50,7 @@ FormPack::FormPack(QWidget *parent) :
     connect(modelBreak,SIGNAL(sigUpd()),this,SLOT(calcSum()));
     connect(ui->pushButtonNakl,SIGNAL(clicked(bool)),this,SLOT(nakl()));
     connect(ui->pushButtonNaklPer,SIGNAL(clicked(bool)),this,SLOT(naklPer()));
+    connect(ui->pushButtonLoad,SIGNAL(clicked(bool)),this,SLOT(loadPack()));
 
     upd();
 }
@@ -88,9 +90,11 @@ void FormPack::updData(int ind)
     if (ui->comboBoxType->getCurrentData().val==1){
         ui->pushButtonNaklPer->hide();
         ui->tableViewNaklData->setModel(modelPack);
+        ui->pushButtonLoad->show();
     } else {
         ui->pushButtonNaklPer->show();
         ui->tableViewNaklData->setModel(modelBreak);
+        ui->pushButtonLoad->hide();
     }
     ui->tableViewNaklData->setColumnHidden(0,true);
     ui->tableViewNaklData->setColumnHidden(1,true);
@@ -131,6 +135,16 @@ void FormPack::naklPer()
     QString filename=ui->comboBoxType->currentText().toUpper()+"_"+ui->dateEditBeg->date().toString("yyyy-MM-dd")+"_"+ui->dateEditEnd->date().toString("yyyy-MM-dd");
     int year=mapper->modelData(mapper->currentIndex(),2).toDate().year();
     Rels::instance()->invoiceManager->getInvoice("invoices/elrtr/workshopper/"+ui->dateEditBeg->date().toString("yyyy-MM-dd")+"/"+ui->dateEditEnd->date().toString("yyyy-MM-dd"),vid,type,filename,year);
+}
+
+void FormPack::loadPack()
+{
+    DialogPackLoad d;
+    d.setCurrentDate(mapper->modelData(mapper->currentIndex(),2).toDate());
+    d.setIdNakl(mapper->modelData(mapper->currentIndex(),0).toInt());
+    if (d.exec()==QDialog::Accepted){
+        modelPack->select();
+    }
 }
 
 ModelNaklData::ModelNaklData(QString table, QObject *parent) : DbTableModel(table,parent)

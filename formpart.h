@@ -49,11 +49,29 @@ signals:
 
 };
 
+class ModelPackPal : public ModelStat
+{
+    Q_OBJECT
+public:
+    ModelPackPal(QObject *parent=0);
+    void refresh(int id_part);
+
+};
+
 class ModelPackEl : public ModelStat
 {
     Q_OBJECT
 public:
     ModelPackEl(QObject *parent=0);
+    void refresh(int id_part);
+
+};
+
+class ModelThermoPack : public ModelStat
+{
+    Q_OBJECT
+public:
+    ModelThermoPack(QObject *parent=0);
     void refresh(int id_part);
 
 };
@@ -118,7 +136,9 @@ private:
     ModelMechSrc *modelMech;
     ModelConsStatData *modelConsStatData;
     ModelConsStatPar *modelConsStatPar;
+    ModelPackPal *modelPackPal;
     ModelPackEl *modelPackEl;
+    ModelThermoPack *modelThermoPack;
     ModelPerePackEl *modelPerePackEl;
     ModelStockEl *modelStockEl;
     ModelSelfEl *modelSelfEl;

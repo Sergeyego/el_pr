@@ -112,8 +112,14 @@ FormPart::FormPart(QWidget *parent) :
     ui->tableViewGlassPar->setColumnWidth(3,70);
     ui->tableViewGlassPar->setColumnWidth(4,80);
 
+    modelPackPal = new ModelPackPal(this);
+    ui->tableViewPackPal->setModel(modelPackPal);
+
     modelPackEl = new ModelPackEl(this);
     ui->tableViewPack->setModel(modelPackEl);
+
+    modelThermoPack = new ModelThermoPack(this);
+    ui->tableViewThermoPack->setModel(modelThermoPack);
 
     modelPerePackEl = new ModelPerePackEl(this);
     ui->tableViewPerePack->setModel(modelPerePackEl);
@@ -307,7 +313,9 @@ void FormPart::refreshCont(int ind)
     modelChem->refresh(id_part);
     modelMech->refresh(id_part);
 
+    refreshStat(ui->groupBoxPackPal,ui->tableViewPackPal);
     refreshStat(ui->groupBoxPack,ui->tableViewPack);
+    refreshStat(ui->groupBoxThermoPack,ui->tableViewThermoPack);
     refreshStat(ui->groupBoxPerepack,ui->tableViewPerePack);
     refreshStat(ui->groupBoxTrans,ui->tableViewTrans);
     refreshStat(ui->groupBoxSelf,ui->tableViewSelf);
@@ -674,7 +682,7 @@ void ModelStockEl::refresh(int id_part)
     QString title=tr("Склад");
     QMap <QString,double> map;
     QSqlQuery query;
-    query.prepare("select pn.dat, pn.num, i.nam, p.kvo*i.koef "
+    query.prepare("select pn.dat, pn.num, i.nam, p.kvo*i.koef, p.barcodecont "
                   "from prod p "
                   "inner join prod_nakl pn on pn.id=p.id_nakl "
                   "inner join istoch i on i.id=pn.id_ist "
@@ -686,6 +694,7 @@ void ModelStockEl::refresh(int id_part)
         setHeaderData(1,Qt::Horizontal,tr("№ нак."));
         setHeaderData(2,Qt::Horizontal,tr("Источник"));
         setHeaderData(3,Qt::Horizontal,tr("К-во, кг"));
+        setHeaderData(4,Qt::Horizontal,tr("Поддон"));
         for (int i=0; i<rowCount(); i++){
             QString key=data(index(i,2),Qt::EditRole).toString();
             double val=data(index(i,3),Qt::EditRole).toDouble();
@@ -758,4 +767,66 @@ void ModelStat::setTitle(QString t)
 {
     tit=t;
     emit sigSum(tit);
+}
+
+ModelPackPal::ModelPackPal(QObject *parent) : ModelStat(parent)
+{
+
+}
+
+void ModelPackPal::refresh(int id_part)
+{
+    double sum=0;
+    QString title=tr("Упаковка поддонов");
+    QSqlQuery query;
+    query.prepare("select epo.dtm, ke.snam, epo.kvo, p.nam "
+                  "from el_pallet_op epo "
+                  "left join kamin_empl ke on ke.id = epo.id_rab "
+                  "left join pallets p ON p.id = epo.id_pallet "
+                  "where epo.id_parti = :id_part and epo.id_src = 1 "
+                  "order by epo.dtm");
+    query.bindValue(":id_part",id_part);
+    if (execQuery(query)){
+        setHeaderData(0,Qt::Horizontal,tr("Дата"));
+        setHeaderData(1,Qt::Horizontal,tr("Работник"));
+        setHeaderData(2,Qt::Horizontal,tr("К-во, кг"));
+        setHeaderData(3,Qt::Horizontal,tr("Поддон"));
+        for (int i=0; i<rowCount(); i++){
+            sum+=data(index(i,2),Qt::EditRole).toDouble();
+        }
+    }
+    QString s;
+    s = (sum!=0)? (title + tr(" итого: ")+QLocale().toString(sum,'f',1)+tr(" кг")) : title;
+    setTitle(s);
+}
+
+ModelThermoPack::ModelThermoPack(QObject *parent) : ModelStat(parent)
+{
+
+}
+
+void ModelThermoPack::refresh(int id_part)
+{
+    double sum=0;
+    QString title=tr("Термопак");
+    QSqlQuery query;
+    query.prepare("select epo.dtm, ke.snam, epo.kvo, p.nam "
+                  "from el_pallet_op epo "
+                  "left join kamin_empl ke on ke.id = epo.id_rab "
+                  "left join pallets p ON p.id = epo.id_pallet "
+                  "where epo.id_parti = :id_part and epo.id_src = 0 "
+                  "order by epo.dtm");
+    query.bindValue(":id_part",id_part);
+    if (execQuery(query)){
+        setHeaderData(0,Qt::Horizontal,tr("Дата"));
+        setHeaderData(1,Qt::Horizontal,tr("Работник"));
+        setHeaderData(2,Qt::Horizontal,tr("К-во, кг"));
+        setHeaderData(3,Qt::Horizontal,tr("Поддон"));
+        for (int i=0; i<rowCount(); i++){
+            sum+=data(index(i,2),Qt::EditRole).toDouble();
+        }
+    }
+    QString s;
+    s = (sum!=0)? (title + tr(" итого: ")+QLocale().toString(sum,'f',1)+tr(" кг")) : title;
+    setTitle(s);
 }

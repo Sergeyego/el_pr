@@ -31,7 +31,7 @@ void FormReport::upd()
     QString query;
     if (ui->radioButtonPart->isChecked()){
         query=QString("select e.marka, p.diam, p.n_s||'-'||date_part('year',p.dat_part) as part, ev.nam, ep.pack_ed, "
-                      "c.ostbeg, c.pack, c.perepack-c.decperepack as perepack, c.perepackbreak, "
+                      "c.ostbeg, c.pack, c.thermo, c.perepack-c.decperepack as perepack, c.perepackbreak, "
                       "c.arch - c.archout as arch, c.isp, c.selfn, c.oth, c.war, c.warout, c.ostend "
                       "from calc_prod_report('%1','%2') as c "
                       "inner join parti p on p.id = c.id_part "
@@ -41,7 +41,7 @@ void FormReport::upd()
                       "order by e.marka, p.diam, part, ev.nam, ep.pack_ed").arg(ui->dateEditBeg->date().addDays(-1).toString("yyyy-MM-dd")).arg(ui->dateEditEnd->date().toString("yyyy-MM-dd"));
     } else {
         query=QString("select e.marka, p.diam, NULL, ev.nam, ep.pack_ed, "
-                      "sum(c.ostbeg), sum(c.pack), sum(c.perepack-c.decperepack) as perepack, sum(c.perepackbreak), "
+                      "sum(c.ostbeg), sum(c.pack), sum(c.thermo), sum(c.perepack-c.decperepack) as perepack, sum(c.perepackbreak), "
                       "sum(c.arch - c.archout) as arch, sum(c.isp), sum(c.selfn), sum(c.oth), sum(c.war), sum(c.warout), sum(c.ostend) "
                       "from calc_prod_report('%1','%2') as c "
                       "inner join parti p on p.id = c.id_part "
@@ -67,7 +67,7 @@ void FormReport::updFinished()
         sums[0]=tr("ИТОГО");
     }
     for (QVector<QVariant> dt : data){
-        for (int i=colCount-11; i<colCount; i++){
+        for (int i=colCount-12; i<colCount; i++){
             sums[i]=sums[i].toDouble()+dt[i].toDouble();
         }
     }
@@ -88,7 +88,7 @@ void FormReport::save()
 ModelReport::ModelReport(QWidget *parent) : TableModel(parent)
 {
     QStringList titles;
-    titles<<tr("Марка")<<tr("Диаметр")<<tr("Партия")<<tr("Вариант")<<tr("Упаковка")<<tr("Налич.на нач.")<<tr("Упаковка")<<tr("Переуп.(+/-)")<<tr("Брак при переуп.");
+    titles<<tr("Марка")<<tr("Диаметр")<<tr("Партия")<<tr("Вариант")<<tr("Упаковка")<<tr("Налич.на нач.")<<tr("Упаковка")<<tr("Термопак")<<tr("Переуп.(+/-)")<<tr("Брак при переуп.");
     titles<<tr("Архив(+/-)")<<tr("Испытан.")<<tr("Соб. потр.")<<tr("Другие")<<tr("На склад")<<tr("Со склада")<<tr("Ост.на конец");
     setHeader(titles);
 }
@@ -97,7 +97,7 @@ QVariant ModelReport::data(const QModelIndex &index, int role) const
 {
     if((role == Qt::BackgroundRole)) {
         double beg = this->data(this->index(index.row(),5),Qt::EditRole).toDouble();
-        double end = this->data(this->index(index.row(),15),Qt::EditRole).toDouble();
+        double end = this->data(this->index(index.row(),16),Qt::EditRole).toDouble();
         if (beg<0 || end<0) {
             return QVariant(QColor(255,170,170));
         } else {

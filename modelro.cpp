@@ -14,6 +14,8 @@ QVariant ModelRo::data(const QModelIndex &item, int role) const
             return (origData.isNull()) ? QString("") : QLocale().toString(origData.toDouble(),'f',mdecimal.value(item.column(),dec));
         } else if (type==QVariant::Date){
             return (origData.isNull()) ? QString("") : origData.toDate().toString("dd.MM.yy");
+        } else if (type==QVariant::DateTime){
+            return (origData.isNull()) ? QString("") : origData.toDateTime().toString("dd.MM.yy hh:mm");
         }
     } else if (role==Qt::TextAlignmentRole){
         return (type==QVariant::Int || type==QVariant::Double || type==QVariant::LongLong ) ?

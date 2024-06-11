@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets sql network
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets sql network printsupport
 
 CONFIG += c++11
 
@@ -22,6 +22,7 @@ SOURCES += \
     db/executor.cpp \
     db/tablemodel.cpp \
     dialogloadchem.cpp \
+    dialogpackload.cpp \
     dialogtmp.cpp \
     formfix.cpp \
     formpack.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
     formperepack.cpp \
     formreport.cpp \
     formself.cpp \
+    httpsyncmanager.cpp \
     invoicemanager.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -58,6 +60,7 @@ HEADERS += \
     db/executor.h \
     db/tablemodel.h \
     dialogloadchem.h \
+    dialogpackload.h \
     dialogtmp.h \
     formfix.h \
     formpack.h \
@@ -65,6 +68,7 @@ HEADERS += \
     formperepack.h \
     formreport.h \
     formself.h \
+    httpsyncmanager.h \
     invoicemanager.h \
     mainwindow.h \
     modelnakl.h \
@@ -85,6 +89,7 @@ FORMS += \
     db/dblogin.ui \
     db/dbrelationeditdialog.ui \
     dialogloadchem.ui \
+    dialogpackload.ui \
     dialogtmp.ui \
     formfix.ui \
     formpack.ui \

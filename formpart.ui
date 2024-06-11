@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1177</width>
+    <width>1175</width>
     <height>838</height>
    </rect>
   </property>
@@ -643,11 +643,42 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>811</width>
-                <height>248</height>
+                <width>869</width>
+                <height>230</height>
                </rect>
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_11">
+               <item>
+                <widget class="QGroupBox" name="groupBoxPackPal">
+                 <property name="title">
+                  <string>Упаковка поддонов</string>
+                 </property>
+                 <property name="flat">
+                  <bool>true</bool>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_10">
+                  <property name="leftMargin">
+                   <number>2</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>2</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>2</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>2</number>
+                  </property>
+                  <item>
+                   <widget class="TableView" name="tableViewPackPal">
+                    <attribute name="verticalHeaderVisible">
+                     <bool>false</bool>
+                    </attribute>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
                <item>
                 <widget class="QGroupBox" name="groupBoxPack">
                  <property name="title">
@@ -671,6 +702,37 @@
                   </property>
                   <item>
                    <widget class="TableView" name="tableViewPack">
+                    <attribute name="verticalHeaderVisible">
+                     <bool>false</bool>
+                    </attribute>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="groupBoxThermoPack">
+                 <property name="title">
+                  <string>Термопак</string>
+                 </property>
+                 <property name="flat">
+                  <bool>true</bool>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_11">
+                  <property name="leftMargin">
+                   <number>2</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>2</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>2</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>2</number>
+                  </property>
+                  <item>
+                   <widget class="TableView" name="tableViewThermoPack">
                     <attribute name="verticalHeaderVisible">
                      <bool>false</bool>
                     </attribute>
