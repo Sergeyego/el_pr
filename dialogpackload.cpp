@@ -156,7 +156,7 @@ void DialogPackLoad::loadData()
     query.prepare("insert into parti_pack (id_nakl, id_part, kvo) ( "
                   "select :id_nakl, epo.id_parti, sum(epo.kvo) "
                   "from el_pallet_op epo "
-                  "where (epo.dtm)::date = :dt and epo.id_main_rab = :id_master "
+                  "where (epo.dtm)::date = :dt and epo.id_main_rab = :id_master and epo.id_src = 1 "
                   "group by epo.id_parti)");
     query.bindValue(":id_nakl",currentIdNakl);
     query.bindValue(":dt",ui->dateEdit->date());

@@ -144,6 +144,7 @@ void FormPack::loadPack()
     d.setIdNakl(mapper->modelData(mapper->currentIndex(),0).toInt());
     if (d.exec()==QDialog::Accepted){
         modelPack->select();
+        calcSum();
     }
 }
 
