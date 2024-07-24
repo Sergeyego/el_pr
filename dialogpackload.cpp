@@ -18,6 +18,7 @@ DialogPackLoad::DialogPackLoad(QWidget *parent) :
     connect(ui->pushButtonPrint,SIGNAL(clicked(bool)),this,SLOT(print()));
     connect(ui->pushButtonCancel,SIGNAL(clicked(bool)),this,SLOT(reject()));
     connect(ui->pushButtonLoad,SIGNAL(clicked(bool)),this,SLOT(loadData()));
+    connect(ui->comboBoxMaster,SIGNAL(currentIndexChanged(int)),this,SLOT(loadDoc()));
 }
 
 DialogPackLoad::~DialogPackLoad()
@@ -95,7 +96,9 @@ void DialogPackLoad::setIdNakl(int id)
 
 void DialogPackLoad::loadDoc()
 {
-    updMaster(ui->dateEdit->date());
+    if (sender()==ui->dateEdit){
+        updMaster(ui->dateEdit->date());
+    }
     if (ui->comboBoxMaster->model()->rowCount()){
         bool by_rab=ui->radioButtonRab->isChecked();
         QString id_master=currentIdMaster();
