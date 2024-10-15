@@ -25,12 +25,9 @@ Rels::Rels(QObject *parent) : QObject(parent)
 
     relRab = new DbSqlRelation("rab_rab","id","snam",this);
     relRab->setSort("snam");
-    relRab->setFilter("rab_rab.id in (select r.id "
-                      "from rab_rab r inner join rab_qual q on q.id_rab=r.id "
-                      "inner join rab_prof p on p.id=q.id_prof "
-                      "inner join rab_razr z on z.id=q.id_razr "
-                      "where id_rab=r.id and id_prof=1 and id_razr in (2,3) "
-                      "order by r.snam)");
+    relRab->setFilter("rab_rab.id in (select distinct rr.id from rab_rab rr "
+                      "inner join kamin_inf ki on ki.id_empl = rr.id_kamin "
+                      "where ki.id_job = '91a0304c-a6e4-11e4-aa08-0018e7159e2e')");
 
     relPress = new DbSqlRelation("pres","id","nam",this);
     relPress->setSort("nam");

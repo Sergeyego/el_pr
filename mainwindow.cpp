@@ -36,6 +36,7 @@ MainWindow::MainWindow(bool part, QWidget *parent)
 MainWindow::~MainWindow()
 {
     saveSettings();
+    delete Rels::instance();
     delete ui;
 }
 
