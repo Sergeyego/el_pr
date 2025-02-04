@@ -71,13 +71,13 @@ Rels::Rels(QObject *parent) : QObject(parent)
     relPackType->setFilter("en=true");
 
     relElPart = new DbSqlRelation("parti","id","str",this);
-    relElPart->setSort("parti.dat_part desc, parti.n_s desc");
+    relElPart->setSort("parti.yea desc, parti.n_s");
     relElPart->setFilter("parti.id<>0");
     relElPart->model()->setLimit(4000);
 
     relElPartNew = new DbSqlRelation("parti","id","str",this);
     relElPartNew->setAlias("parti_new");
-    relElPartNew->setSort("parti_new.dat_part desc, parti_new.n_s desc");
+    relElPartNew->setSort("parti_new.yea desc, parti_new.n_s");
     relElPartNew->setFilter("parti_new.id<>0");
     relElPartNew->model()->setLimit(4000);
 

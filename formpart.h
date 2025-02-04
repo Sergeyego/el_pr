@@ -149,6 +149,7 @@ private:
     void refreshStat(QGroupBox *g, TableView *v);
 
 private slots:
+    void updRow();
     void updPart();
     void refreshCont(int ind);
     void setCurrentChemDev();

@@ -213,6 +213,7 @@ FormPart::FormPart(QWidget *parent) :
     connect(ui->comboBoxChemDev,SIGNAL(currentIndexChanged(int)),this,SLOT(setCurrentChemDev()));
     connect(ui->pushButtonChem,SIGNAL(clicked(bool)),this,SLOT(loadChem()));
     connect(ui->pushButtonSamp,SIGNAL(clicked(bool)),this,SLOT(insertChemSamp()));
+    connect(mapper,SIGNAL(sigEdt()),this,SLOT(updRow()));
 
     connect(ui->tableViewGlass->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(refreshGlassData(QModelIndex)));
 
@@ -268,6 +269,14 @@ void FormPart::refreshStat(QGroupBox *g, TableView *v)
     }
 }
 
+void FormPart::updRow()
+{
+    int ind=mapper->currentIndex();
+    if (!mapper->modelData(ind,0).isNull()){
+        modelPart->refreshRow(ind);
+    }
+}
+
 void FormPart::updPart()
 {
     int id_el=-1;
@@ -290,6 +299,7 @@ void FormPart::refreshCont(int ind)
 {
     int id_part=mapper->modelData(ind,0).isNull() ? -1 : mapper->modelData(ind,0).toInt();
     QDate dat_part=mapper->modelData(ind,2).toDate();
+    //updRow();
 
     modelGlass->setFilter("acc_glyba.id_part = "+QString::number(id_part));
     modelGlass->setDefaultValue(1,id_part);
@@ -783,7 +793,7 @@ void ModelPackPal::refresh(int id_part)
                   "from el_pallet_op epo "
                   "left join kamin_empl ke on ke.id = epo.id_rab "
                   "left join pallets p ON p.id = epo.id_pallet "
-                  "where epo.id_parti = :id_part and epo.id_src = 1 "
+                  "where epo.id_parti = :id_part and epo.id_src in (1,2) "
                   "order by epo.dtm");
     query.bindValue(":id_part",id_part);
     if (execQuery(query)){
