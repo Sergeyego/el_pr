@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1173</width>
-    <height>838</height>
+    <width>1128</width>
+    <height>840</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -93,13 +93,27 @@
        <item>
         <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="7">
-          <widget class="DbComboBox" name="comboBoxPack"/>
+          <widget class="DbComboBox" name="comboBoxPack">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
          </item>
          <item row="1" column="1">
           <widget class="DbComboBox" name="comboBoxRcp"/>
          </item>
          <item row="2" column="7">
-          <widget class="DbComboBox" name="comboBoxVar"/>
+          <widget class="DbComboBox" name="comboBoxVar">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
          </item>
          <item row="3" column="1">
           <widget class="QPlainTextEdit" name="plainTextEditNote">
@@ -121,7 +135,14 @@
           <widget class="DbComboBox" name="comboBoxSrc"/>
          </item>
          <item row="1" column="7">
-          <widget class="DbComboBox" name="comboBoxLen"/>
+          <widget class="DbComboBox" name="comboBoxLen">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
          </item>
          <item row="2" column="6">
           <widget class="QLabel" name="label_15">
@@ -644,7 +665,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>869</width>
-                <height>230</height>
+                <height>232</height>
                </rect>
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_11">
