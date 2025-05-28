@@ -90,8 +90,10 @@ FormPart::FormPart(QWidget *parent) :
     modelMech = new ModelMechSrc(this);
     ui->tableViewMech->setModel(modelMech);
     ui->tableViewMech->setColumnHidden(0,true);
-    ui->tableViewMech->setColumnWidth(1,180);
-    ui->tableViewMech->setColumnWidth(2,80);
+    ui->tableViewMech->setColumnWidth(1,50);
+    ui->tableViewMech->setColumnWidth(2,50);
+    ui->tableViewMech->setColumnWidth(3,180);
+    ui->tableViewMech->setColumnWidth(4,80);
 
     modelConsStatData = new ModelConsStatData(this);
     modelConsStatData->refresh(-1);
