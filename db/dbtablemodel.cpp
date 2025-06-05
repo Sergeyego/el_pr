@@ -956,8 +956,8 @@ DbSqlLikeModel::DbSqlLikeModel(DbSqlRelation *r, QObject *parent) : QSortFilterP
     inital=false;
     setSourceModel(origModel);
     setFilterKeyColumn(2);
-    setFilterRegExp(relation->getCurrentFilterRegExp());
-    connect(relation,SIGNAL(filterRegExpInstalled(QString)),this,SLOT(setFilterRegExp(QString)));
+    setFilterRegularExpression(relation->getCurrentFilterRegExp());
+    connect(relation,SIGNAL(filterRegExpInstalled(QString)),this,SLOT(setFilterRegularExpression(QString)));
 }
 
 void DbSqlLikeModel::setAsync(bool b)

@@ -48,7 +48,7 @@ void InvoiceManager::onResult(QNetworkReply *reply)
         if (!dir.exists()) dir.mkdir(dir.path());
         dir.setPath(dir.path()+"/"+year);
         if (!dir.exists()) dir.mkdir(dir.path());
-        filename=filename.replace(QRegExp("[^\\w]"), "_");
+        filename=filename.replace(QRegularExpression("[^\\w]",QRegularExpression::UseUnicodePropertiesOption), "_");
         QString totalName=dir.path()+"/"+filename+".docx";
         QFile file(totalName);
         if (file.open(QIODevice::WriteOnly)){

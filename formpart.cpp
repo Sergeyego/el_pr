@@ -494,7 +494,7 @@ ModelPart::ModelPart(QObject *parent) : DbTableModel("parti",parent)
 
 QVariant ModelPart::data(const QModelIndex &index, int role) const
 {
-    if((role == Qt::BackgroundColorRole)) {
+    if((role == Qt::BackgroundRole)) {
         int area = colorState.value(data(this->index(index.row(),0),Qt::EditRole).toInt());
         if(area == 1) return QVariant(QColor(255,170,170)); else
             if(area == 2) return QVariant(QColor(170,255,170)); else
@@ -521,7 +521,11 @@ bool ModelPart::insertRow(int row, const QModelIndex &parent)
     refresh(dBeg,dEnd,-1);
     int old_num=0;
     if (rowCount()>0) old_num=this->data(this->index(rowCount()-1,1),Qt::EditRole).toInt();
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    setDefaultValue(1,QString("%1").arg((old_num+1),4,10,'0'));
+#else
     setDefaultValue(1,QString("%1").arg((old_num+1),4,'d',0,QChar('0')));
+#endif
     setDefaultValue(2,QDate::currentDate());
     return DbTableModel::insertRow(row,parent);
 }

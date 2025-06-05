@@ -9,7 +9,6 @@
 #include <QAbstractItemView>
 #include <QAction>
 #include <QApplication>
-#include <QDesktopWidget>
 #include "dbrelationeditdialog.h"
 #include "dbtablemodel.h"
 #include "dbviewer.h"
